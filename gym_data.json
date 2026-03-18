@@ -1,27 +1,34 @@
-[
-    {
-        "dpi": 1245783612045,
-        "nombre": "Juan D\u00c3\u00a1vila",
-        "riesgo": "Alto"
-    },
-    {
-        "dpi": 3380344042005,
-        "Nombre": "Anderson",
-        "Riesgo": "Bajo"
-    },
-    {
-        "dpi": 3380344042005,
-        "Nombre": "Alondra Lucia Martin Jimenez",
-        "Riesgo": "Bajo"
-    },
-    {
-        "dpi": 1234569871598,
-        "Nombre": "Juan Daniel Montana",
-        "Riesgo": "Alto"
-    },
-    {
-        "DPI": 5317255159851,
-        "Nombre": "Lucia Martin",
-        "Riesgo": "Bajo"
-    }
-]
+{
+    "servicios": [
+        {
+            "nombre": "Yoga",
+            "cantidad": 500,
+            "disponibles": 500,
+            "matriculados": 0
+        },
+        {
+            "nombre": "Karate",
+            "capacidad": 60,
+            "disponibles": 60,
+            "matriculados": 0
+        },
+        {
+            "nombre": "Pesas",
+            "capacidad": 80,
+            "disponibles": 80,
+            "matriculados": 0
+        },
+        {
+            "nombre": "Calistenia",
+            "capacidad": 801,
+            "disponibles": 801,
+            "matriculados": 0
+        },
+        {
+            "nombre": "Kun fu",
+            "capacidad": 50,
+            "disponibles": 50,
+            "matriculados": 0
+        }
+    ]
+}

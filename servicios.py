@@ -1,5 +1,6 @@
 import json
 
+
 data = "gym_data.json"
 riesgos = ["Alto", "Medio", "Bajo"]
 
@@ -54,6 +55,57 @@ def registrar_clientes(data):
             print(f"Error: {e}")
 
 #registrar_clientes(data)
+
+def configurar_servicio():
+    
+    try:
+        nombre_servicio = input("Nombre del servicio: ").strip()
+        if not nombre_servicio:
+            print("El nombre del servicio no puede quedar en blanco")
+            return
+        capacidad_maxima = int(input("Capacidad máxima: "))
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+    
+    servicio = {
+            "nombre": nombre_servicio,
+            "capacidad": capacidad_maxima,
+            "disponibles": capacidad_maxima,
+            "matriculados": 0
+    }
+    
+    encontrado = False
+    
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)            
+    except Exception as e:
+        print(f"Error: {e}")
+
+    servicios = datos['servicios']
+        
+    for _ in servicios:
+        name = _.get('nombre')
+        if name is not None and nombre_servicio.lower() == name.lower():
+           print("El servicio que intenta agregar ya existe")
+           return
+        
+    if not nombre_servicio.strip():
+        print("El campo nombre no puede estar en blanco")
+        return
+    else:
+        servicios.append(servicio)  
+        datos['servicios'] = servicios  
+        
+        try:
+            with open(data, "w") as file:
+                json.dump(datos, file, indent=4)
+            print("Servicio agregado exitosamente.")
+        except Exception as e:
+            print(f"Error al guardar el archivo: {e}")
+
+configurar_servicio()
 
 
 
