@@ -5,23 +5,23 @@
         "riesgo": "Alto"
     },
     {
-        "DPI": 3380344042005,
+        "dpi": 3380344042005,
         "Nombre": "Anderson",
         "Riesgo": "Bajo"
     },
     {
-        "DPI": 1506666,
-        "Nombre": "Alondra",
+        "dpi": 3380344042005,
+        "Nombre": "Alondra Lucia Martin Jimenez",
         "Riesgo": "Bajo"
     },
     {
-        "DPI": 3380344042005,
-        "Nombre": "Alondra",
-        "Riesgo": "Bajo"
+        "dpi": 1234569871598,
+        "Nombre": "Juan Daniel Montana",
+        "Riesgo": "Alto"
     },
     {
-        "DPI": 3380344042005,
-        "Nombre": "",
+        "DPI": 5317255159851,
+        "Nombre": "Lucia Martin",
         "Riesgo": "Bajo"
     }
 ]
