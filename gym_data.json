@@ -29,6 +29,12 @@
             "capacidad": 50,
             "disponibles": 50,
             "matriculados": 0
+        },
+        {
+            "nombre": "Taek Won Do",
+            "capacidad": 1000,
+            "disponibles": 1000,
+            "matriculados": 0
         }
     ]
 }
