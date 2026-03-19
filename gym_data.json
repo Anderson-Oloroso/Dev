@@ -11,6 +11,18 @@
             "riesgo": "Bajo"
         }
     ],
+    "instructores": [
+        {
+            "dpi": 1592634877531,
+            "nombre": "Andr\u00e9s de la costa",
+            "area": "Calistenia"
+        },
+        {
+            "dpi": 1592634877531,
+            "nombre": "Juan de la costa",
+            "area": "karate"
+        }
+    ],
     "servicios": [
         {
             "nombre": "Yoga",

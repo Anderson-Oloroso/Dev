@@ -117,13 +117,15 @@ def mostrar_catalogos(data):
     print(mensaje)
     try:
         with open(data, "r") as file:
-            servicios = json.load(file)
-            service = servicios.get('servicios')
+            datos = json.load(file)
+            service = datos.get('servicios')
         print("Servicios disponibles:")
         _ = 0
+        print("========   CLIENTES   =========")
         for servicio in service:
             _+=1
             print(f"{_}. {servicio['nombre']}\nCapacidad: {servicio['capacidad']}\nCupos Disponibles: {servicio['disponibles']}\nPersonas Matriculadas: {servicio['matriculados']}\n")
+    
     except Exception as e:
         print(f"Error: {e}")
 
@@ -303,8 +305,102 @@ def evaluar_progreso(data):
             elif m['asistencias'] == m['duracion'] or m['asistencias'] > m['duracion']:
                 print("Curso terminado satisfactoriamente")
                 break
-            
-
-                
+            elif m['servicio'].lower() != nombre_servicio.lower():
+                print("Servicio no entrado o no matriculado")
+                return
+            elif m['dpi'] != dpi:
+                print("DPI no registrado o no tiene ningun servicio matriculado")
+                return
             
 #evaluar_progreso(data)
+
+def gestionar_instructores(data):
+    print(mensaje)
+    print("    Gestionar instructores")
+    print(mensaje)
+    try:
+        dpi = int(input("DPI del instructor: "))
+        nombre_instructor = input("Nombre del instructor: ").strip()
+        area_instructor = input("Area de especializacion: ").strip()
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        instructores = datos.get('instructores')          
+    except Exception as e:
+        print(f"Error: {e}")
+
+    encontrado = False
+
+    for i, doc in enumerate(instructores):
+        docp = doc.get('dpi')
+        area = doc.get('area')
+        if dpi == docp and area.lower() == area_instructor.lower():
+            encontrado = True
+
+    if encontrado == True:
+        print("El instructor ya esta regsitrado en esa area")
+        return
+
+    elif not nombre_instructor.strip():
+        print("Nombre no puede estar vacío.")
+        return
+    elif len(str(dpi))!= 13:
+        print("DPI debe tener 13 dígitos. Intente nuevamente.")
+        return
+    else:
+        try:
+            instructor = {
+            "dpi": dpi,
+            "nombre": nombre_instructor,
+            "area": area_instructor
+            }
+
+            datos['instructores'] = instructores
+            instructores.append(instructor)
+            
+            with open(data, "w") as f:
+                json.dump(datos, f, indent=4)
+                print("Instructor registrado exitosamente.")   
+        except Exception as e:
+            print(f"Error: {e}")
+
+#gestionar_instructores(data)
+
+def asignar_instructor(data):
+    print(mensaje)
+    print("    Asignar instructor")
+    print(mensaje)
+    
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        instructores = datos.get('instructores') 
+        clientes = datos.get('matriculas')    
+        i = 0
+        print("===== Instructores =====")
+        for instructor in instructores:
+            i += 1
+            print(f"{i}. DPI: {instructor['dpi']}\nNombre: {instructor['nombre']}\nArea: {instructor['area']}\n") 
+
+        print("===== Clientes Matriculados =====")
+        for cliente in clientes:
+            i += 1
+            print(f"{i}. DPI: {cliente['dpi']}\nServicio: {cliente['servicio']}\n") 
+    except Exception as e:
+        print(f"Error: {e}")
+
+    try:
+        instruct = int(input("DPI instructor: "))
+        client = int(input("DPI cliente: ")) 
+
+        if len(str(instruct)) != 13 or len(str(client)) != 13:
+            print("EL DPI debe tener 13 caracteres validos")
+            return
+    except Exception as e:
+        print("Error", e)
+
+asignar_instructor(data)
