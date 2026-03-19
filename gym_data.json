@@ -54,13 +54,15 @@
             "dpi": 3380344042005,
             "servicio": "Yoga",
             "fecha": "15/10/23",
-            "duracion": "3 meses"
+            "duracion": 90,
+            "asistencias": 1
         },
         {
             "dpi": 3380344042005,
             "servicio": "Calistenia",
             "fecha": "15/4/26",
-            "duracion": "3 meses"
+            "duracion": 90,
+            "asistencias": 0
         }
     ]
 }

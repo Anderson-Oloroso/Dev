@@ -193,7 +193,7 @@ def matricular_en_servicio(data):
         dpi = int(input("DPI del cliente: "))
         nombre_servicio = input("Nombre del servicio: ").strip()
         fecha = input("Fecha inicio: ")
-        duracion = input("Duracion: ")
+        duracion = int(input("Duracion (en dias): "))
     except Exception as e:
         print(f"Error: {e}")
         return
@@ -224,7 +224,8 @@ def matricular_en_servicio(data):
         "dpi": dpi,
         "servicio": nombre_servicio,
         "fecha": fecha,
-        "duracion": duracion
+        "duracion": duracion,
+        "asistencias": 0
         }
         try:
             with open(data, "r") as file:
@@ -260,4 +261,50 @@ def matricular_en_servicio(data):
                     print("Cliente matriculado exitosamente.")
                     break
 
-matricular_en_servicio(data)
+#matricular_en_servicio(data)
+
+def evaluar_progreso(data):
+    print(mensaje)
+    print("     Evaluar progreso")
+    print(mensaje)
+    try:
+        dpi = int(input("DPI del cliente: "))
+        nombre_servicio = input("Servicio matriculado: ").strip()
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        matriculados = datos.get('matriculas')          
+    except Exception as e:
+        print(f"Error: {e}")
+
+    encontrado = None
+    for _ in matriculados: 
+        dpiP = _.get('dpi')
+        if dpiP == dpi:
+            encontrado = True
+        
+    if len(str(dpi)) != 13:
+        print("Su dpi debe contener 13 caracteres")
+        return
+    elif encontrado != False:
+       for m in matriculados:
+            if m['dpi'] == dpi and m['servicio'].lower() == nombre_servicio.lower() and m['duracion'] > m['asistencias']:
+                m['asistencias'] += 1
+                datos['matriculas'] = matriculados
+                with open(data, "w") as file:
+                    json.dump(datos, file, indent=4)
+                    
+                print("Asistencia registrada")
+                break
+            elif m['asistencias'] == m['duracion'] or m['asistencias'] > m['duracion']:
+                print("Curso terminado satisfactoriamente")
+                break
+            
+
+                
+            
+#evaluar_progreso(data)
