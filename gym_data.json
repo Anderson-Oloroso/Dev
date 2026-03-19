@@ -2,7 +2,7 @@
     "servicios": [
         {
             "nombre": "Yoga",
-            "cantidad": 500,
+            "capacidad": 500,
             "disponibles": 500,
             "matriculados": 0
         },
@@ -34,6 +34,12 @@
             "nombre": "Taek Won Do",
             "capacidad": 1000,
             "disponibles": 1000,
+            "matriculados": 0
+        },
+        {
+            "nombre": "Quilates",
+            "capacidad": 60,
+            "disponibles": 60,
             "matriculados": 0
         }
     ]

@@ -1,10 +1,14 @@
 import json
 
+mensaje = "===================================="
 
 data = "gym_data.json"
 riesgos = ["Alto", "Medio", "Bajo"]
 
 def registrar_clientes(data):
+    print(mensaje)
+    print("     Registrar Clientes")
+    print(mensaje)
     try:
         dpi = int(input("DPI: "))
         nombre = input("Nombre: ")
@@ -56,8 +60,10 @@ def registrar_clientes(data):
 
 #registrar_clientes(data)
 
-def configurar_servicio():
-    
+def configurar_servicio(data):
+    print(mensaje)
+    print("     Configurar Servicio")
+    print(mensaje)
     try:
         nombre_servicio = input("Nombre del servicio: ").strip()
         if not nombre_servicio:
@@ -74,8 +80,6 @@ def configurar_servicio():
             "disponibles": capacidad_maxima,
             "matriculados": 0
     }
-    
-    encontrado = False
     
     try:
         with open(data, "r") as file:
@@ -105,8 +109,103 @@ def configurar_servicio():
         except Exception as e:
             print(f"Error al guardar el archivo: {e}")
 
-configurar_servicio()
+#configurar_servicio(data)
 
+def mostrar_catalogos(data):
+    print(mensaje)
+    print("     Mostrar Catálogo")
+    print(mensaje)
+    try:
+        with open(data, "r") as file:
+            servicios = json.load(file)
+            service = servicios.get('servicios')
+        print("Servicios disponibles:")
+        _ = 0
+        for servicio in service:
+            _+=1
+            print(f"{_}. {servicio['nombre']}\nCapacidad: {servicio['capacidad']}\nCupos Disponibles: {servicio['disponibles']}\nPersonas Matriculadas: {servicio['matriculados']}\n")
+    except Exception as e:
+        print(f"Error: {e}")
 
+mostrar_catalogos(data)
 
+def mantenimiento_servicio(data):
+    print(mensaje)
+    print("     Mantenimiento de Servicio")
+    print(mensaje)
+
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        servicios = datos.get('servicios')          
+    except Exception as e:
+        print(f"Error: {e}")
+
+    servicios = datos['servicios']
+    nombre_servicio = input("Ingrese el nombre del servicio que desea modificar: ").strip()
+    for _ in servicios:
+        name = _.get('nombre')
+        if nombre_servicio.lower() == name.lower():
+           print("Servicio encontrado.")
+           print(mensaje)
+           print("¿Qué desea modificar?")
+           print("1. Capacidad máxima")
+           print("2. Cupos disponibles")
+           print("3. Personas matriculadas")
+           print("4. Eliminar servicio")
+           print("5. Volver")
+        else:
+            print("Servicio no encontrado.")
+            return
+    
+    try:
+        opcion = int(input("Ingrese el número de la opción: "))
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+    
+    if opcion == 1:
+        try:
+            nueva_capacidad = int(input("Ingrese la nueva capacidad máxima: "))
+            for i in servicios:
+                if i['nombre'].lower() == nombre_servicio.lower():
+                    i['capacidad'] = nueva_capacidad
+                    print("Capacidad máxima actualizada.")
+        except Exception as e:
+            print(f"Error: {e}")
+            return
+    elif opcion == 2:
+        try:
+            nuevos_cupos = int(input("Ingrese el nuevo número de cupos disponibles: "))
+            for i in servicios:
+                if i['nombre'].lower() == nombre_servicio.lower():
+                    i['disponibles'] = nuevos_cupos
+                    print("Cupos disponibles actualizados.")
+        except Exception as e:
+            print(f"Error: {e}")
+            return
+    elif opcion == 3:
+        try:
+            nuevas_matriculas = int(input("Ingrese el nuevo número de personas matriculadas: "))
+            for i in servicios:
+                if i['nombre'].lower() == nombre_servicio.lower():
+                    i['matriculados'] = nuevas_matriculas
+                    print("Número de personas matriculadas actualizado.")
+        except Exception as e:
+            print(f"Error: {e}")
+            return  
+    elif opcion == 4:
+        for i, j in enumerate(servicios):
+            if j['nombre'].lower() == nombre_servicio.lower():
+                servicios.pop(i)
+                print("Servicio eliminado.")
+                break
+    elif opcion == 5:
+        return
+    else:
+        print("Opción no válida.")
+        return  
+
+mantenimiento_servicio(data)
+    
 
