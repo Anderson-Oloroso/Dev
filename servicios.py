@@ -5,7 +5,7 @@ mensaje = "===================================="
 data = "gym_data.json"
 riesgos = ["Alto", "Medio", "Bajo"]
 
-def registrar_clientes(data):
+'''def registrar_clientes(data):
     print(mensaje)
     print("     Registrar Clientes")
     print(mensaje)
@@ -24,8 +24,8 @@ def registrar_clientes(data):
             "Riesgo": riesgo
         }
         with open(data, "r") as file:
-            clientes = json.load(file)
-            
+            datos = json.load(file)
+        clientes = datos['clientes']
         clientes.append(cliente)
     except Exception as e:
         print(f"Error: {e}")
@@ -58,8 +58,8 @@ def registrar_clientes(data):
         except Exception as e:
             print(f"Error: {e}")
 
-#registrar_clientes(data)
-
+registrar_clientes(data)
+'''
 def configurar_servicio(data):
     print(mensaje)
     print("     Configurar Servicio")
@@ -192,6 +192,8 @@ def matricular_en_servicio(data):
     try:
         dpi = int(input("DPI del cliente: "))
         nombre_servicio = input("Nombre del servicio: ").strip()
+        fecha = input("Fecha inicio: ")
+        duracion = input("Duracion: ")
     except Exception as e:
         print(f"Error: {e}")
         return
@@ -207,43 +209,55 @@ def matricular_en_servicio(data):
     for servicio in servicios:
         if servicio['nombre'].lower() == nombre_servicio.lower():
             servicio_encontrado = servicio
+            servicio['matriculados'] += 1
+            servicio['disponibles'] -= 1
             break
 
     if not servicio_encontrado:
         print("Servicio no encontrado.")
         return
-
-    if servicio_encontrado['disponibles'] <= 0:
+    elif servicio_encontrado['disponibles'] <= 0:
         print("No hay cupos disponibles para este servicio.")
         return
     else:
         matricula = {
         "dpi": dpi,
-        "servicio": nombre_servicio
+        "servicio": nombre_servicio,
+        "fecha": fecha,
+        "duracion": duracion
         }
-    
         try:
             with open(data, "r") as file:
                 datos = json.load(file)  
-            matriculas = datos.get('matriculas')          
+            matriculas = datos.get('matriculas')      
+            dpiP = datos.get('clientes')    
         except Exception as e:
             print(f"Error: {e}")
-        #Verificar la validacion del dpi si existe en el archivo de clientes
 
-        for m in matriculas:
-            if m['dpi'] == dpi and m['servicio'].lower() == nombre_servicio.lower():
-                print("El cliente ya está matriculado en este servicio.")
-                break
-            else:
-                matriculas.append(matricula)
-                servicio_encontrado['disponibles'] -= 1
-                servicio_encontrado['matriculados'] += 1
+        encontrado = True
+        for _ in dpiP:
+            if _['dpi'] == dpi:
+                encontrado = False
 
-                datos['matriculas'] = matriculas
-                with open(data, "w") as file:
-                    json.dump(datos, file, indent=4)
-                
-                print("Cliente matriculado exitosamente.")
-                break
+        if len(str(dpi)) != 13:
+            print("Su dpi debe contener 13 caracteres")
+            return
+        elif encontrado != False:
+            print("Lo sentimos, dpi no registrado")
+        else:
+            for m in matriculas:
+                if m['dpi'] == dpi and m['servicio'].lower() == nombre_servicio.lower():
+                    print("El cliente ya está matriculado en este servicio.")
+                    break
+                else:
+                    matriculas.append(matricula)
+
+                    datos['matriculas'] = matriculas
+                    datos['servicios'] = servicios
+                    with open(data, "w") as file:
+                        json.dump(datos, file, indent=4)
+                    
+                    print("Cliente matriculado exitosamente.")
+                    break
 
 matricular_en_servicio(data)

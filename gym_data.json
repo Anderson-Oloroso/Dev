@@ -1,8 +1,13 @@
 {
-    "personas": [
+    "clientes": [
         {
             "dpi": 3380344042005,
             "nombre": "Juan D\u00c3\u00a1vila",
+            "riesgo": "Bajo"
+        },
+        {
+            "dpi": 1592634871256,
+            "nombre": "Luisa Martin",
             "riesgo": "Bajo"
         }
     ],
@@ -28,8 +33,8 @@
         {
             "nombre": "Calistenia",
             "capacidad": 801,
-            "disponibles": 801,
-            "matriculados": 0
+            "disponibles": 800,
+            "matriculados": 1
         },
         {
             "nombre": "Kun fu",
@@ -47,19 +52,15 @@
     "matriculas": [
         {
             "dpi": 3380344042005,
-            "servicio": "Yoga"
+            "servicio": "Yoga",
+            "fecha": "15/10/23",
+            "duracion": "3 meses"
         },
         {
             "dpi": 3380344042005,
-            "servicio": "Taek Won Do"
-        },
-        {
-            "dpi": 3380344042005,
-            "servicio": "Kun fu"
-        },
-        {
-            "dpi": 32496,
-            "servicio": "Yoga"
+            "servicio": "Calistenia",
+            "fecha": "15/4/26",
+            "duracion": "3 meses"
         }
     ]
 }
