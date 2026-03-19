@@ -15,8 +15,8 @@
         {
             "nombre": "Yoga",
             "capacidad": 500,
-            "disponibles": 500,
-            "matriculados": 0
+            "disponibles": 499,
+            "matriculados": 1
         },
         {
             "nombre": "Karate",
