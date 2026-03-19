@@ -403,4 +403,76 @@ def asignar_instructor(data):
     except Exception as e:
         print("Error", e)
 
-asignar_instructor(data)
+#asignar_instructor(data)
+
+def evaluar_progreso(data):
+    print(mensaje)
+    print("      Evaluar Progreso")
+    print(mensaje)
+    
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        clientes = datos.get('clientes')    
+        i = 0
+        print("===== Clientes Registrados =====")
+        for cliente in clientes:
+            i += 1
+            print(f"{i}. DPI: {cliente['dpi']}\nNombre: {cliente['nombre']}\nRiesgo: {cliente['riesgo']}\n") 
+    except Exception as e:
+        print(f"Error: {e}")
+        
+    try:
+        dpi = int(input("DPI del cliente: "))
+        print(len(str(dpi)))
+        if len(str(dpi)) != 13:
+            print(len(str(dpi)))
+            print("El dpi debe tener 13 caracteres validos")
+            return
+        peso= int(input("Ingreso el pero en libras: "))
+        rendimiento = int(input("Rendimiento (1. Alto/ 2. Medio/ 3.Bajo): "))
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+
+    if rendimiento == 1:
+        print("¡¡¡ Felicidades, lo estas haciendo muy bien, sigue así !!!")    
+        msj = "Alto"
+    elif rendimiento == 2:
+        print("¡¡¡ Vas bien, solo necesitas un poco mas de esfuerzo !!!")    
+        msj = "Medio"
+    elif rendimiento == 3:
+        print("¡¡¡ No te desanimes, todo es posible cuando se desea mejorar !!!")    
+        msj = "Bajo"  
+    else:
+        print("Opcion invalida")
+        return  
+    
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)            
+    except Exception as e:
+        print(f"Error: {e}")
+
+    progresos = datos['progreso']
+        
+    if not peso or not dpi:
+        print("No pueden haber campos en blanco")
+        return
+    else:
+        progreso = {
+            "dpi": dpi,
+            "peso": peso,
+            "rendimiento": msj
+        }
+        progresos.append(progreso)
+        datos['progreso'] = progresos
+        
+        try:
+            with open(data, "w") as file:
+                json.dump(datos, file, indent=4)
+            print("Progreso agregado exitosamente.")
+        except Exception as e:
+            print(f"Error al guardar el archivo: {e}")
+            
+#evaluar_progreso(data)

@@ -76,5 +76,32 @@
             "duracion": 90,
             "asistencias": 0
         }
+    ],
+    "progreso": [
+        {
+            "dpi": 3380344042005,
+            "peso": 115,
+            "rendimiento": "Alto"
+        },
+        {
+            "dpi": 3380344042005,
+            "peso": 160,
+            "rendimiento": "Bajo"
+        },
+        {
+            "dpi": 1592634871256,
+            "peso": 123,
+            "rendimiento": "Bajo"
+        },
+        {
+            "dpi": 3380344042005,
+            "peso": 120,
+            "rendimiento": "Medio"
+        },
+        {
+            "dpi": 1592634871256,
+            "peso": 96,
+            "rendimiento": "Alto"
+        }
     ]
 }
