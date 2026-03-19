@@ -1,4 +1,11 @@
 {
+    "personas": [
+        {
+            "dpi": 3380344042005,
+            "nombre": "Juan D\u00c3\u00a1vila",
+            "riesgo": "Bajo"
+        }
+    ],
     "servicios": [
         {
             "nombre": "Yoga",
@@ -35,12 +42,24 @@
             "capacidad": 1000,
             "disponibles": 1000,
             "matriculados": 0
+        }
+    ],
+    "matriculas": [
+        {
+            "dpi": 3380344042005,
+            "servicio": "Yoga"
         },
         {
-            "nombre": "Quilates",
-            "capacidad": 60,
-            "disponibles": 60,
-            "matriculados": 0
+            "dpi": 3380344042005,
+            "servicio": "Taek Won Do"
+        },
+        {
+            "dpi": 3380344042005,
+            "servicio": "Kun fu"
+        },
+        {
+            "dpi": 32496,
+            "servicio": "Yoga"
         }
     ]
 }

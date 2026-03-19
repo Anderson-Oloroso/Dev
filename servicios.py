@@ -127,7 +127,7 @@ def mostrar_catalogos(data):
     except Exception as e:
         print(f"Error: {e}")
 
-mostrar_catalogos(data)
+#mostrar_catalogos(data)
 
 def mantenimiento_servicio(data):
     print(mensaje)
@@ -143,20 +143,14 @@ def mantenimiento_servicio(data):
 
     servicios = datos['servicios']
     nombre_servicio = input("Ingrese el nombre del servicio que desea modificar: ").strip()
-    for _ in servicios:
-        name = _.get('nombre')
-        if nombre_servicio.lower() == name.lower():
+    for i, j in enumerate(servicios):
+        if nombre_servicio.lower() == j['nombre'].lower():
            print("Servicio encontrado.")
            print(mensaje)
            print("¿Qué desea modificar?")
            print("1. Capacidad máxima")
-           print("2. Cupos disponibles")
-           print("3. Personas matriculadas")
-           print("4. Eliminar servicio")
-           print("5. Volver")
-        else:
-            print("Servicio no encontrado.")
-            return
+           print("2. Eliminar servicio")
+           print("3. Volver")
     
     try:
         opcion = int(input("Ingrese el número de la opción: "))
@@ -175,37 +169,81 @@ def mantenimiento_servicio(data):
             print(f"Error: {e}")
             return
     elif opcion == 2:
-        try:
-            nuevos_cupos = int(input("Ingrese el nuevo número de cupos disponibles: "))
-            for i in servicios:
-                if i['nombre'].lower() == nombre_servicio.lower():
-                    i['disponibles'] = nuevos_cupos
-                    print("Cupos disponibles actualizados.")
-        except Exception as e:
-            print(f"Error: {e}")
-            return
-    elif opcion == 3:
-        try:
-            nuevas_matriculas = int(input("Ingrese el nuevo número de personas matriculadas: "))
-            for i in servicios:
-                if i['nombre'].lower() == nombre_servicio.lower():
-                    i['matriculados'] = nuevas_matriculas
-                    print("Número de personas matriculadas actualizado.")
-        except Exception as e:
-            print(f"Error: {e}")
-            return  
-    elif opcion == 4:
         for i, j in enumerate(servicios):
             if j['nombre'].lower() == nombre_servicio.lower():
                 servicios.pop(i)
                 print("Servicio eliminado.")
                 break
-    elif opcion == 5:
+    elif opcion == 3:
         return
     else:
         print("Opción no válida.")
         return  
-
-mantenimiento_servicio(data)
     
+    with open(data, "w") as file:
+        json.dump(datos, file, indent=4)
 
+#mantenimiento_servicio(data)
+    
+def matricular_en_servicio(data):
+    print(mensaje)
+    print("     Matricular en Servicio")
+    print(mensaje)
+    try:
+        dpi = int(input("DPI del cliente: "))
+        nombre_servicio = input("Nombre del servicio: ").strip()
+    except Exception as e:
+        print(f"Error: {e}")
+        return
+    
+    try:
+        with open(data, "r") as file:
+            datos = json.load(file)  
+        servicios = datos.get('servicios')          
+    except Exception as e:
+        print(f"Error: {e}")
+
+    servicio_encontrado = None
+    for servicio in servicios:
+        if servicio['nombre'].lower() == nombre_servicio.lower():
+            servicio_encontrado = servicio
+            break
+
+    if not servicio_encontrado:
+        print("Servicio no encontrado.")
+        return
+
+    if servicio_encontrado['disponibles'] <= 0:
+        print("No hay cupos disponibles para este servicio.")
+        return
+    else:
+        matricula = {
+        "dpi": dpi,
+        "servicio": nombre_servicio
+        }
+    
+        try:
+            with open(data, "r") as file:
+                datos = json.load(file)  
+            matriculas = datos.get('matriculas')          
+        except Exception as e:
+            print(f"Error: {e}")
+        #Verificar la validacion del dpi si existe en el archivo de clientes
+
+        for m in matriculas:
+            if m['dpi'] == dpi and m['servicio'].lower() == nombre_servicio.lower():
+                print("El cliente ya está matriculado en este servicio.")
+                break
+            else:
+                matriculas.append(matricula)
+                servicio_encontrado['disponibles'] -= 1
+                servicio_encontrado['matriculados'] += 1
+
+                datos['matriculas'] = matriculas
+                with open(data, "w") as file:
+                    json.dump(datos, file, indent=4)
+                
+                print("Cliente matriculado exitosamente.")
+                break
+
+matricular_en_servicio(data)
